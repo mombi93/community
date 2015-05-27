@@ -10,12 +10,14 @@ var routes = require('./routes/index');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/test');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function(callback){
-  console.log('Database connection open');
-});
+if(process.env.DB!=='static'){
+  mongoose.connect('mongodb://localhost/test');
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function(callback){
+    console.log('Database connection open');
+  });
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
